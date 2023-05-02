@@ -32,6 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['web-production-f8ed.up.railway.app', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = ['https://web-production-f8ed.up.railway.app']
 
 # Application definition
 
@@ -42,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'buzzlab_app'
+    'buzzlab_app',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'buzzlab_project.urls'
