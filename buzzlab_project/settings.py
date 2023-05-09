@@ -13,9 +13,18 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import environ
+from django.contrib.messages import constants as messages
 
 env = environ.Env()
 environ.Env.read_env()
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-secondary',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,7 +53,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'buzzlab_app',
-    'corsheaders'
+    'corsheaders',
+    "crispy_forms",
+    "crispy_bootstrap4",
 ]
 
 MIDDLEWARE = [
@@ -64,7 +75,7 @@ ROOT_URLCONF = 'buzzlab_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,6 +89,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'buzzlab_project.wsgi.application'
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 
 # Database
