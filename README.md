@@ -1,7 +1,7 @@
 # Buzzlab
 
-Buzzlab é um projeto open source da CESAR School que ajuda pessoas a encontrar componentes de hardware em laboratórios próximos.
+Buzzlab is an open source project from CESAR School that helps people find hardware components in nearby labs.
 
 ## Como funciona
 
-O Buzzlab permite que usuários pesquisem por componentes específicos, como microcontroladores, sensores e atuadores, e encontrem laboratórios próximos que possuem esses componentes em estoque. Os usuários podem então entrar em contato com os laboratórios para obter os componentes.
+Buzzlab allows users to search for specific components, such as microcontrollers, sensors, and actuators, and find nearby labs that have these components in stock. Users can then contact the labs to obtain the components.
