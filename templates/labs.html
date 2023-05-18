@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} My Labs {% endblock title %}
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+
+<div class="container py-5">
+	<h1>My Labs</h1>
+
+	{% if labs.count > 0 %}
+	<ul>
+		{% for lab in labs %}
+		<li>{{ lab.id }} - {{ lab.name }}</li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<h4>You dont't have any labs yet.</h4>
+	{% endif %}
+</div>
+
+{% endblock content %}

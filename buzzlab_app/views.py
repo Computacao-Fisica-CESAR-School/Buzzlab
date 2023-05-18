@@ -3,6 +3,8 @@ from .forms import NewUserForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Lab, UserProfile
 
 def home(request):
     return render(request, "home.html")
@@ -41,3 +43,15 @@ def logout_request(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("/")
+
+def my_labs(request):
+	if request.user.is_authenticated:
+		try:
+			curr_user_profile = UserProfile.objects.get(user=request.user)
+		except ObjectDoesNotExist:
+			labs = Lab.objects.none()
+		else:
+			labs = Lab.objects.filter(admins=curr_user_profile)
+		return render(request, "labs.html", {"labs": labs})
+	messages.info(request, "You need to be logged in to access that page.")
+	return redirect("/login")
