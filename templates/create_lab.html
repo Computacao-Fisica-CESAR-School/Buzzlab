@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %} Create Lab {% endblock title %}
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+{% include 'includes/messages.html' %}
+
+{% load crispy_forms_tags %}
+
+<div class="container py-5">
+	<h1>Create Lab</h1>
+	<form method="POST">
+		{% csrf_token %}
+		<h3 class="pt-3">Lab Info</h3>
+		{{ lab_form|crispy }}
+
+		<h3 class="pt-3">Address Info</h3>
+		{{ address_form|crispy }}
+
+		<h3 class="pt-3">Opening Hours</h3>
+		{{ oh_formset.management_form }}
+		{% for form, weekday in oh_formset_weekdays %}
+			<div class="form-row">
+				<div class="form-group mb-1 mr-3" style="width: 7.5rem; min-width: 6rem;">
+					{{ weekday }}
+				</div>
+				<div class="form-group mb-1 mr-3" style="width: 6rem; min-width: 6rem;">
+					{{ form.is_closed }} <small class="text-muted">Closed</small>
+				</div>
+				<div class="form-group mb-1">
+					{{ form.open_time }} - {{ form.close_time }}
+				</div>
+			  </div>
+			{% endfor %}
+		<button class="btn btn-dark mt-3" type="submit">Create Lab</button>
+	</form>
+</div>
+
+<script>
+    // Get all the checkboxes in the document
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    checkboxes.forEach(function (checkbox) {
+        // Add a click event listener to each checkbox
+        checkbox.addEventListener('click', function () {
+            // Get the time inputs next to the checkbox
+            const inputs = this.parentNode.nextElementSibling.querySelectorAll('input[type="time"]');
+            
+            // Toggle the disabled attribute for each time input
+            inputs.forEach(function (input) {
+                input.disabled = this.checked;
+				// Clear the current value when disabled
+				if (input.disabled) {
+                    input.value = '';
+                }
+            }, this);
+        });
+    });
+</script>
+
+
+{% endblock content %}

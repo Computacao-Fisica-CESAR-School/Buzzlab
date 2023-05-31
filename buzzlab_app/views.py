@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import NewUserForm
+from .forms import NewUserForm, CreateLabForm, AddressForm, OpeningHoursFormset
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -55,3 +55,29 @@ def my_labs(request):
 		return render(request, "labs.html", {"labs": labs})
 	messages.info(request, "You need to be logged in to access that page.")
 	return redirect("/login")
+
+def create_lab(request):
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    if request.method == 'POST':
+        lab_form = CreateLabForm(request.POST)
+        address_form = AddressForm(request.POST)
+        opening_hours_formset = OpeningHoursFormset(request.POST)
+        
+        if lab_form.is_valid() and address_form.is_valid() and opening_hours_formset.is_valid():
+            lab = lab_form.save(commit=False)
+            address = address_form.save()
+            lab.address = address
+            lab.save()
+            for form, wd in zip(opening_hours_formset, weekdays):
+                oh_form = form.save(commit=False)
+                oh_form.weekday = wd
+                oh_form.save()
+                lab.opening_hours.add(oh_form)
+            lab.admins.add(request.user.userprofile)
+            return redirect('/labs')
+    else:
+        lab_form = CreateLabForm()
+        address_form = AddressForm()
+        opening_hours_formset = OpeningHoursFormset()
+
+    return render(request, 'create_lab.html', {'lab_form': lab_form, 'address_form': address_form, 'oh_formset': opening_hours_formset, 'oh_formset_weekdays': zip(opening_hours_formset, weekdays)})

@@ -9,24 +9,16 @@ class Address(models.Model):
     district = models.CharField(max_length=63)
     street = models.CharField(max_length=63)
     street_number = models.CharField(max_length=7)
-    additional = models.CharField(max_length=63)
+    additional = models.CharField(max_length=63, blank=True)
     
     def __str__(self):
         return f"{self.street}, {self.street_number} - {self.district}, {self.city} - {self.state}, {self.postal_code}"
 
 class OpeningHours(models.Model):
-    class Weekdays(models.TextChoices):
-        MONDAY = "Monday"
-        TUESDAY = "Tuesday"
-        WEDNESDAY = "Wednesday"
-        THURSDAY = "Thursday"
-        FRIDAY = "Friday"
-        SATURDAY = "Saturday"
-        SUNDAY = "Sunday"
-    
-    weekday = models.CharField(max_length=16, choices=Weekdays.choices)
-    open_time = models.TimeField()
-    close_time = models.TimeField()
+    weekday = models.CharField(max_length=16)
+    is_closed = models.BooleanField()
+    open_time = models.TimeField(blank=True, null=True)
+    close_time = models.TimeField(blank=True, null=True)
     
     def __str__(self):
         return f"{self.weekday}: {self.open_time} - {self.close_time}"
