@@ -50,7 +50,7 @@ class ComponentCategory(models.Model):
         return f"{self.category}"
     
 class Component(models.Model):
-    name = models.CharField(max_length=63)
+    name = models.CharField(max_length=127)
     description = models.TextField(max_length=1023, blank=True)
     category = models.ForeignKey(ComponentCategory, on_delete=models.CASCADE)
     
