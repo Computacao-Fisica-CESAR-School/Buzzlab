@@ -51,7 +51,7 @@ class ComponentCategory(models.Model):
     
 class Component(models.Model):
     name = models.CharField(max_length=63)
-    description = models.TextField(max_length=1023)
+    description = models.TextField(max_length=1023, blank=True)
     category = models.ForeignKey(ComponentCategory, on_delete=models.CASCADE)
     
     def __str__(self):
