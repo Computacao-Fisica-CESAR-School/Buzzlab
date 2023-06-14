@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} Lab Management {% endblock title %}
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+{% include 'includes/messages.html' %}
+
+{% load crispy_forms_tags %}
+
+<h1>{{ lab.name }}</h1>
+<h2>{{ lab.description }}</h2>
+<h3>{{ lab.address }}</h3>
+<h3>{{ lab.phone }}</h3>
+<h3>{{ lab.email }}</h3>
+{% for oh in opening_hours %}
+<h3>{{ oh }}</h3>
+{% endfor %}
+{% for admin in admins %}
+<h3>{{ admin }}</h3>
+{% endfor %}
+
+{% endblock content %}

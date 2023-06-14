@@ -81,3 +81,10 @@ def create_lab(request):
         opening_hours_formset = OpeningHoursFormset()
 
     return render(request, 'create_lab.html', {'lab_form': lab_form, 'address_form': address_form, 'oh_formset': opening_hours_formset, 'oh_formset_weekdays': zip(opening_hours_formset, weekdays)})
+
+def manage_lab(request, id):
+    #TODO: block current user if they are not an admin for this lab
+    lab = Lab.objects.get(id=id)
+    opening_hours = lab.opening_hours.all()
+    admins = lab.admins.all()
+    return render(request, "manage_lab.html", {'lab': lab, 'opening_hours': opening_hours, 'admins': admins})

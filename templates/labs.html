@@ -7,18 +7,23 @@
 {% include 'includes/navbar.html' %}
 
 <div class="container py-5">
-	<div class="d-flex justify-content-between align-items-center">
+	<div class="d-flex justify-content-between align-items-center pb-3">
 		<h1>My Labs</h1>
-		<a class="btn btn-dark h-100" href="/labs/create">&plus; Create Lab</a>
+		<a class="btn btn-success h-100" href="{% url 'create_lab' %}">&plus; Create Lab</a>
 	</div>
 
 	{% if labs.count > 0 %}
+	<div class="row">
 		{% for lab in labs %}
-		<div class="card border-dark mb-2">
-			<div class="card-body">
-				{{ lab.name }}
+		<div class="col-sm-4">
+			<div class="card border-0 shadow mb-5">
+				<h5 class="card-header">{{ lab.name }}</h5>
+				<div class="card-body">
+					<p class="card-text font-weight-light">{{ lab.description }}</p>
+					<a href="{% url 'manage_lab' lab.id %}" class="btn btn-dark">Manage</a>
+				</div>
 			</div>
-		  </div>
+		</div>
 		{% endfor %}
 	{% else %}
 	<h4>You dont't have any labs yet.</h4>
